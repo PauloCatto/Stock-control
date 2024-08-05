@@ -3,16 +3,18 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthRequest } from 'src/app/models/interfaces/user/auth/AuthRequest';
 import { SignupUserRequest } from './../../models/interfaces/user/SignupUserRequest';
 import { UserService } from './../../services/user/user.service';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnDestroy{
+  private destroy$ = new Subject<void>();
   loginCard = true;
 
   loginForm = this.formBuilder.group({
@@ -36,7 +38,11 @@ export class HomeComponent {
 
   onSubmitLoginForm(): void {
     if (this.loginForm.value && this.loginForm.valid) {
-      this.userService.authUser(this.loginForm.value as AuthRequest).subscribe({
+      this.userService.authUser(this.loginForm.value as AuthRequest)
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
         next: (response) => {
           if (response) {
             this.cookieService.set('USER_INFO', response?.token);
@@ -72,7 +78,11 @@ export class HomeComponent {
         email: this.signupForm.value.email as string,
         password: this.signupForm.value.password as string
       };
-      this.userService.signupUser(signupData).subscribe({
+      this.userService.signupUser(signupData)
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
         next: (response) => {
           this.signupForm.reset();
           this.loginCard = true;
@@ -94,5 +104,10 @@ export class HomeComponent {
         }
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
