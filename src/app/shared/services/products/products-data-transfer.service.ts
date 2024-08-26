@@ -23,6 +23,13 @@ export class ProductsDataTransferService {
       take(1),
       map((data) => data?.filter((product) => product.amount > 0))
     )
+      .subscribe({
+        next: (response) => {
+          if (response) {
+            this.productsDatas = response;
+          }
+        },
+      });
     return this.productsDatas;
   }
 }
