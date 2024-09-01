@@ -1,8 +1,13 @@
-<div>
+<!-- Formulário de Adição -->
+<div *ngIf="productAction?.event?.action === addProductAction">
   <form [formGroup]="addProductForm" (ngSubmit)="handleSubmitAddProduct()">
     <div class="card flex flex-column gap-3 p-4">
-      <input pInputText placeholder="Nome" formControlName="name" />
-
+      <input
+        pInputText
+        placeholder="Nome"
+        formControlName="name"
+        class="w-full"
+      />
       <p-dropdown
         styleClass="w-full"
         [options]="categoriesDatas"
@@ -13,16 +18,71 @@
         formControlName="category_id"
       >
       </p-dropdown>
-
-      <input pInputText placeholder="Preço" formControlName="price" />
-      <input pInputText placeholder="Descrição" formControlName="description" />
-      <input pInputText placeholder="Quantidade" formControlName="amount" />
-
+      <input
+        pInputText
+        placeholder="Preço"
+        formControlName="price"
+        class="w-full"
+      />
+      <input
+        pInputText
+        placeholder="Descrição"
+        formControlName="description"
+        class="w-full"
+      />
+      <input
+        pInputText
+        placeholder="Quantidade"
+        formControlName="amount"
+        class="w-full"
+      />
       <div
         class="flex flex-row justify-content-center align-content-center align-items-center m-1"
       >
         <p-button
           [disabled]="!addProductForm.valid"
+          type="submit"
+          label="Concluir"
+        ></p-button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Formulário de Edição -->
+<div *ngIf="productAction?.event?.action === editProductAction">
+  <form [formGroup]="editProductForm" (ngSubmit)="handleSubmitEditProduct()">
+    <div class="card flex flex-column gap-3 p-4">
+      <input
+        pInputText
+        placeholder="Nome"
+        formControlName="name"
+        class="w-full"
+      />
+      <input
+        pInputText
+        placeholder="Preço"
+        formControlName="price"
+        class="w-full"
+      />
+      <input
+        pInputText
+        placeholder="Descrição"
+        formControlName="description"
+        class="w-full"
+      />
+      <input
+        pInputText
+        type="number"
+        placeholder="Quantidade"
+        formControlName="amount"
+        class="w-full"
+      />
+      <div
+        class="flex flex-row justify-content-center align-content-center align-items-center m-1"
+      >
+        <p-button
+          [disabled]="!editProductForm.valid"
           type="submit"
           label="Concluir"
         ></p-button>
