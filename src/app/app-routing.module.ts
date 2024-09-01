@@ -8,11 +8,11 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
   },
   {
     path: 'dashboard',
@@ -20,7 +20,7 @@ const routes: Routes = [
       import('./modules/dashboard/dashboard.module').then(
         (m) => m.DashboardModule
       ),
-      canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
   },
   {
     path: 'products',
@@ -28,12 +28,20 @@ const routes: Routes = [
       import('./modules/products/products.module').then(
         (m) => m.ProductsModule
       ),
-      canActivate: [AuthGuardService]
-  }
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'categories',
+    loadChildren: () =>
+      import('./modules/categories/categories.module').then(
+        (m) => m.CategoriesModule
+      ),
+    canActivate: [AuthGuardService],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

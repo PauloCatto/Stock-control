@@ -59,6 +59,17 @@
         formControlName="name"
         class="w-full"
       />
+      <div *ngIf="renderDropdown">
+        <p-dropdown
+          styleClass="w-full"
+          [options]="categoriesDatas"
+          [(ngModel)]="selectedCategory"
+          optionLabel="name"
+          optionValue="id"
+          formControlName="category_id"
+        >
+        </p-dropdown>
+      </div>
       <input
         pInputText
         placeholder="Preço"
