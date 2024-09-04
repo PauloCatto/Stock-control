@@ -28,4 +28,14 @@ export class CategoriesTableComponent implements OnInit {
       this.deleteCategoryEvent.emit({ category_id, categoryName });
     }
   }
+
+  handleCategoryEvent(
+    action: string,
+    id?: string,
+    categoryName?: string
+  ): void {
+    if (action && action !== '') {
+      this.categoryEvent.emit({ action, id, categoryName });
+    }
+  }
 }

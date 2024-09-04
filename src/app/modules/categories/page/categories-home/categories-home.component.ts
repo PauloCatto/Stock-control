@@ -1,4 +1,4 @@
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { CategoriesService } from './../../../../services/categories/categories.service';
 import { Component, OnInit } from '@angular/core';
@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { GetCategoriesResponse } from 'src/app/models/interfaces/categories/responses/GetCategoriesResponse';
 import { DeleteCategoryAction } from 'src/app/models/interfaces/categories/event/DeleteCategoryAction';
+import { EventAction } from 'src/app/models/interfaces/products/event/EventAction';
+import { CategoryFormComponent } from '../../components/category-form/category-form/category-form.component';
 
 @Component({
   selector: 'app-categories-home',
@@ -15,6 +17,7 @@ import { DeleteCategoryAction } from 'src/app/models/interfaces/categories/event
 export class CategoriesHomeComponent implements OnInit {
   private readonly destroy$: Subject<void> = new Subject();
   public categoriesDatas: Array<GetCategoriesResponse> = [];
+  private ref!: DynamicDialogRef;
 
   constructor(
     private categoriesService: CategoriesService,
@@ -64,6 +67,25 @@ export class CategoriesHomeComponent implements OnInit {
     }
   }
 
+  handleCategoryAction(event: EventAction): void {
+    if (event) {
+      this.ref = this.dialogService.open(CategoryFormComponent, {
+        header: event?.action,
+        width: '70%',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        maximizable: true,
+        data: {
+          event: event,
+        },
+      });
+      this.ref.onClose.pipe(takeUntil(this.destroy$)).subscribe({
+        next: () => this.getAllCategories(),
+      });
+      this.getAllCategories();
+    }
+  }
+
   deleteCategory(category_id: string) {
     if (category_id) {
       this.categoriesService
@@ -87,7 +109,6 @@ export class CategoriesHomeComponent implements OnInit {
               detail: 'Erro ao remover categoria.',
               life: 3000,
             });
-
             this.getAllCategories();
           },
         });

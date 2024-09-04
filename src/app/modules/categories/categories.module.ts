@@ -20,9 +20,14 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { SharedModule } from '../../shared/shared.module';
 import { CategoriesTableComponent } from './components/categories-table/categories-table.component';
+import { CategoryFormComponent } from './components/category-form/category-form/category-form.component';
 
 @NgModule({
-  declarations: [CategoriesHomeComponent, CategoriesTableComponent],
+  declarations: [
+    CategoriesHomeComponent,
+    CategoriesTableComponent,
+    CategoryFormComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
