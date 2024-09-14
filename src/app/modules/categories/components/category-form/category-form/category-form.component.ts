@@ -2,7 +2,7 @@ import { CategoriesService } from './../../../../../services/categories/categori
 import { MessageService } from 'primeng/api';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { CategoryEvent } from 'src/app/models/categories/CategoryEvent';
 import { EditCategoryAction } from 'src/app/models/interfaces/categories/event/EditCategoryAction';
@@ -23,7 +23,7 @@ export class CategoryFormComponent implements OnInit {
   });
 
   constructor(
-    public ref: DynamicDialogConfig,
+    private ref: DynamicDialogRef,
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private categoriesService: CategoriesService
@@ -51,6 +51,7 @@ export class CategoryFormComponent implements OnInit {
                 life: 3000,
               });
             }
+            this.ref.close();
           },
           error: (err) => {
             console.log(err);
@@ -63,6 +64,7 @@ export class CategoryFormComponent implements OnInit {
             });
           },
         });
+      this;
     }
   }
 

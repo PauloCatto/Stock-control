@@ -101,6 +101,7 @@ export class CategoriesHomeComponent implements OnInit {
             });
 
             this.getAllCategories();
+            this.ref.close();
           },
           error: (err) => {
             this.messageService.add({
