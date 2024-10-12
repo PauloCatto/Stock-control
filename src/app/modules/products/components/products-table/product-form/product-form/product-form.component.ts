@@ -13,6 +13,7 @@ import { GetAllProductsResponse } from 'src/app/models/interfaces/products/respo
 import { ProductsDataTransferService } from 'src/app/shared/services/products/products-data-transfer.service';
 import { ProductEvent } from 'src/app/models/enums/products/ProductsEvent';
 import { EditProductRequest } from 'src/app/models/interfaces/products/request/EditProductRequest';
+import { SaleProductRequest } from 'src/app/models/interfaces/products/request/SaleProductRequest';
 
 @Component({
   selector: 'app-product-form',
@@ -179,7 +180,6 @@ export class ProductFormComponent {
               detail: 'Erro ao editar produto.',
               life: 2500,
             });
-
             this.dialogRef.close();
           },
         });
@@ -221,6 +221,46 @@ export class ProductFormComponent {
           }
         },
       });
+  }
+
+  handleSubmitSaleProduct(): void {
+    if (this.saleProductForm?.value && this.saleProductForm?.valid) {
+      const requestDatas: SaleProductRequest = {
+        amount: this.saleProductForm.value?.amount as number,
+        product_id: this.saleProductForm.value?.product_id as string,
+      };
+
+      this.productsService
+        .saleProduct(requestDatas)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (response) => {
+            if (response) {
+              this.saleProductForm.reset();
+              this.getProductDatas();
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Sucesso',
+                detail: 'Venda efetuada com sucesso.',
+                life: 3000,
+              });
+              this.dialogRef.close();
+              this.router.navigate(['/dashboard']);
+            }
+          },
+          error: (err) => {
+            console.log(err);
+            this.saleProductForm.reset();
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Erro ao vender produto.',
+              life: 3000,
+            });
+            this.dialogRef.close();
+          },
+        });
+    }
   }
 
   ngOnDestroy(): void {

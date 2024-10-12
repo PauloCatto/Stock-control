@@ -2,7 +2,7 @@ import { CategoriesService } from './../../../../../services/categories/categori
 import { MessageService } from 'primeng/api';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { CategoryEvent } from 'src/app/models/categories/CategoryEvent';
 import { EditCategoryAction } from 'src/app/models/interfaces/categories/event/EditCategoryAction';
@@ -23,13 +23,33 @@ export class CategoryFormComponent implements OnInit {
   });
 
   constructor(
-    private ref: DynamicDialogRef,
+    public ref: DynamicDialogConfig,
+    private dialog: DynamicDialogRef,
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private categoriesService: CategoriesService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.categoryAction = this.ref.data;
+
+    if (
+      (this.categoryAction?.event?.action === this.editCategoryAction &&
+        this.categoryAction?.event?.categoryName !== null) ||
+      undefined
+    ) {
+      this.setCategoryName(this.categoryAction?.event?.categoryName as string);
+    }
+  }
+
+  handleSubmitCategoryAction(): void {
+    if (this.categoryAction?.event?.action === this.addCategoryAction) {
+      this.handleSubmitAddCategory();
+    } else if (this.categoryAction?.event?.action === this.editCategoryAction) {
+      this.handleSubmitEditCategory();
+    }
+    return;
+  }
 
   handleSubmitAddCategory(): void {
     if (this.categoryForm?.value && this.categoryForm?.valid) {
@@ -51,7 +71,7 @@ export class CategoryFormComponent implements OnInit {
                 life: 3000,
               });
             }
-            this.ref.close();
+            this.dialog.close();
           },
           error: (err) => {
             console.log(err);
@@ -65,6 +85,53 @@ export class CategoryFormComponent implements OnInit {
           },
         });
       this;
+    }
+  }
+
+  handleSubmitEditCategory(): void {
+    if (
+      this.categoryForm?.value &&
+      this.categoryForm?.valid &&
+      this.categoryAction?.event?.id
+    ) {
+      const requestEditCategory: { name: string; category_id: string } = {
+        name: this.categoryForm?.value.name as string,
+        category_id: this.categoryAction?.event?.id,
+      };
+
+      this.categoriesService
+        .edityCategoryName(requestEditCategory)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => {
+            this.categoryForm.reset();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Sucesso',
+              detail: 'Categoria editada com sucesso.',
+              life: 3000,
+            });
+            this.dialog.close();
+          },
+          error: (err) => {
+            console.log(err);
+            this.categoryForm.reset();
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Erro ao editar categoria.',
+              life: 3000,
+            });
+          },
+        });
+    }
+  }
+
+  setCategoryName(categoryName: string): void {
+    if (categoryName) {
+      this.categoryForm.setValue({
+        name: categoryName,
+      });
     }
   }
 
