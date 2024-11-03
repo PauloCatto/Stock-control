@@ -20,6 +20,8 @@
     "@angular/router": "^15.2.0",
     "@prisma/client": "^5.16.1",
     "chart.js": "^4.4.3",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.2",
     "ngx-cookie-service": "^14.0.0",
     "primeflex": "^3.3.1",
     "primeicons": "^5.0.0",

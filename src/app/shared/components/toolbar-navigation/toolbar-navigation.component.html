@@ -40,6 +40,14 @@
 
   <div class="p-toolbar-group-center">
     <p-button
+      *ngIf="showButton"
+      label="Secondary"
+      label="Export to PDF"
+      severity="secondary"
+      class="position-element"
+      (click)="downloadPdf()"
+    />
+    <p-button
       label="Sair"
       icon="pi pi-sign-out"
       styleClass="p-button-danger"
