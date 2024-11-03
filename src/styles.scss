@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 * {
+
   html,
   body,
   div,
@@ -169,4 +170,14 @@
   :host ::ng-deep .p-dropdown {
     width: 50%;
   }
+}
+
+body {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+
+.dark-mode {
+  background-color: #272626ef !important;
+  color: white !important;
 }

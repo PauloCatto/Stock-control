@@ -15,12 +15,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './modules/home/home.component';
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent
-  ],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -31,12 +29,10 @@ import { MessageService } from 'primeng/api';
     InputTextModule,
     ButtonModule,
     ToastModule,
-    ChartModule
+    ChartModule,
+    MatIconModule,
   ],
-  providers: [
-    CookieService,
-    MessageService
-  ],
-  bootstrap: [AppComponent]
+  providers: [CookieService, MessageService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

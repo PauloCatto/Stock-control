@@ -21,10 +21,14 @@ export class ToolbarNavigationComponent {
     private dashboardPdfService: DashboardPdfService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.router.events.subscribe(() => {
       this.showButton = this.router.url === '/dashboard';
     });
+  }
+
+  toggle() {
+    document.body.classList.toggle('dark-mode');
   }
 
   downloadPdf(): void {
