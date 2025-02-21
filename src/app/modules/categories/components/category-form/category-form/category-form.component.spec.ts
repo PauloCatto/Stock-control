@@ -1,8 +1,5 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
 import { CategoryFormComponent } from './category-form.component';
 
 describe('CategoryFormComponent', () => {
@@ -25,4 +22,5 @@ describe('CategoryFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });

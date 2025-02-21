@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CategoryEvent } from 'src/app/models/categories/CategoryEvent';
 import { DeleteCategoryAction } from 'src/app/models/interfaces/categories/event/DeleteCategoryAction';
 import { EditCategoryAction } from 'src/app/models/interfaces/categories/event/EditCategoryAction';
@@ -9,7 +9,7 @@ import { GetCategoriesResponse } from 'src/app/models/interfaces/categories/resp
   templateUrl: './categories-table.component.html',
   styleUrls: [],
 })
-export class CategoriesTableComponent implements OnInit {
+export class CategoriesTableComponent {
   @Input() public categories: Array<GetCategoriesResponse> = [];
   @Output() public categoryEvent = new EventEmitter<EditCategoryAction>();
   @Output() public deleteCategoryEvent =
@@ -20,8 +20,6 @@ export class CategoriesTableComponent implements OnInit {
   public editCategoryAction = CategoryEvent.EDIT_CATEGORY_ACTION;
 
   constructor() {}
-
-  ngOnInit() {}
 
   handleDeleteCategoryEvent(category_id: string, categoryName: string): void {
     if (category_id !== '' && categoryName !== '') {

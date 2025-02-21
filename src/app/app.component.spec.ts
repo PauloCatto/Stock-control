@@ -1,35 +1,43 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let primengConfigMock: jasmine.SpyObj<PrimeNGConfig>;
+  let fixture: ComponentFixture<AppComponent>;
+
   beforeEach(async () => {
+    primengConfigMock = jasmine.createSpyObj('PrimeNGConfig', [
+      'setTranslation',
+    ]);
+
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
+      imports: [RouterTestingModule, ToastModule],
+      declarations: [AppComponent],
+      providers: [
+        { provide: PrimeNGConfig, useValue: primengConfigMock },
+        MessageService,
       ],
     }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
-  it(`should have as title 'stock-control'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('stock-control');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  it('should set ripple to true and configure translations on ngOnInit', () => {
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('stock-control app is running!');
+
+    expect(primengConfigMock.ripple).toBeTrue();
+    expect(primengConfigMock.setTranslation).toHaveBeenCalledWith({
+      apply: 'Aplicar',
+      clear: 'Limpar',
+    });
   });
 });

@@ -27,7 +27,7 @@ export class ToolbarNavigationComponent {
     });
   }
 
-  toggle() {
+  toggle(): void {
     document.body.classList.toggle('dark-mode');
   }
 
