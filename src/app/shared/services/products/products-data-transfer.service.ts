@@ -12,7 +12,7 @@ export class ProductsDataTransferService {
 
   constructor() { }
 
-  setProductsDatas(products: Array<GetAllProductsResponse>): void {
+  setProductsDatas(products: Array<GetAllProductsResponse> | null): void {
     if (products) {
       this.productsDataEmitter$.next(products);
       this.getProductsDatas();

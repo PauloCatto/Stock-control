@@ -4,10 +4,10 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'shorten',
 })
 export class ShortenPipe implements PipeTransform {
-  transform(value: string, args: number): any {
-    if (value !== null) {
-      return value.length > args ? value.substring(0, args) + '...' : value;
+  transform(value: string | null, args: number): any {
+    if (value == null) {
+      return '';
     }
-    return '';
+    return value.length > args ? value.substring(0, args) + '...' : value;
   }
 }

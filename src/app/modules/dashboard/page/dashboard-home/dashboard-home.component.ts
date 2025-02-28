@@ -44,6 +44,8 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
+          debugger
+          console.log('ts', response)
           if (response.length > 0) {
             this.productsList = response;
             this.productsDtService.setProductsDatas(this.productsList);

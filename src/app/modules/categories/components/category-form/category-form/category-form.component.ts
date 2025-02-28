@@ -82,9 +82,10 @@ export class CategoryFormComponent implements OnInit {
               detail: 'Erro ao criar categorias.',
               life: 3000,
             });
+            this.dialog.close();
           },
         });
-      this;
+
     }
   }
 
@@ -122,6 +123,7 @@ export class CategoryFormComponent implements OnInit {
               detail: 'Erro ao editar categoria.',
               life: 3000,
             });
+            this.dialog.close();
           },
         });
     }
