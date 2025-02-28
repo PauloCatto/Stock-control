@@ -72,7 +72,6 @@ export class ProductFormComponent {
 
   ngOnInit(): void {
     this.productAction = this.ref.data;
-
     this.productAction?.event?.action === this.saleProductAction &&
       this.getProductDatas();
 
