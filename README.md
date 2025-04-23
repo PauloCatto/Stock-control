@@ -34,7 +34,7 @@ Este projeto tem como objetivo gerenciar o controle de estoque de produtos. Ele 
 
 ## **Testes Unitários**
 
-A cobertura de testes unitários foi configurada para garantir uma cobertura mínima de 70%. Aqui estão os resultados dos testes:
+A cobertura dos testes unitários foram configuradas para garantir uma cobertura mínima de 70%. Aqui estão os resultados dos testes:
 <br>
 <br>
 ![2025-03-15_14-44-49](https://github.com/user-attachments/assets/b571ac52-a294-4b09-8981-b47e96a4cd39)
