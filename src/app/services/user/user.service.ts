@@ -24,6 +24,10 @@ export class UserService {
     return this.http.post<AuthResponse>(`${this.API_URL}/auth`, requestDatas);
   }
 
+  changePassword(requestDatas: any): Observable<any> {
+    return this.http.put<any>(`${this.API_URL}/user/password`, requestDatas);
+  }
+
   isLoggedIn(): boolean {
     const jwtToken = this.cookieService.get('USER_INFO');
     return !!jwtToken;

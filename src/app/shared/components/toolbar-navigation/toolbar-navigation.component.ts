@@ -13,6 +13,8 @@ import { DashboardPdfService } from 'src/app/modules/dashboard/page/dashboard-ho
 })
 export class ToolbarNavigationComponent {
   public showButton!: boolean;
+  public menuOpen = false;
+  public isDark = false;
 
   constructor(
     private cookieService: CookieService,
@@ -24,10 +26,16 @@ export class ToolbarNavigationComponent {
   ngOnInit(): void {
     this.router.events.subscribe(() => {
       this.showButton = this.router.url === '/dashboard';
+      this.menuOpen = false; 
     });
   }
 
+  toggleMenu(): void {
+    this.menuOpen = !this.menuOpen;
+  }
+
   toggle(): void {
+    this.isDark = !this.isDark;
     document.body.classList.toggle('dark-mode');
   }
 

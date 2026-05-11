@@ -1,66 +1,85 @@
-<p-toolbar styleClass="bg-indigo-800">
-  <div class="p-toolbar-group-start">
-    <p-button
-      icon="pi pi-home"
-      label="Dashboard"
-      routerLink="/dashboard"
-      styleClass="bg-indigo-800 p-button-secondary"
-      routerLinkActive="exact_route"
-    ></p-button>
-  </div>
+<nav class="navbar">
+  <div class="navbar-inner">
 
-  <div class="p-toolbar-group-center">
-    <p-button
-      icon="pi pi-cart-plus"
-      label="Produtos"
-      routerLink="/products"
-      styleClass="bg-indigo-800 p-button-secondary"
-      routerLinkActive="exact_route"
-      class="mr-2"
-    ></p-button>
+    <!-- Brand -->
+    <a class="brand" routerLink="/dashboard">
+      <div class="brand-logo">
+        <i class="pi pi-chart-bar"></i>
+      </div>
+      <span class="brand-name">StockControl</span>
+    </a>
 
-    <p-button
-      icon="pi pi-ticket"
-      label="Categorias"
-      routerLink="/categories"
-      styleClass="bg-indigo-800 p-button-secondary"
-      routerLinkActive="exact_route"
-      class="mr-2"
-    ></p-button>
+    <!-- Links desktop -->
+    <ul class="nav-links">
+      <li>
+        <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+          <i class="pi pi-home"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/products" routerLinkActive="active">
+          <i class="pi pi-box"></i>
+          <span>Produtos</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/categories" routerLinkActive="active">
+          <i class="pi pi-tag"></i>
+          <span>Categorias</span>
+        </a>
+      </li>
+      <li>
+        <a class="sale-link" (click)="handleSaleProduct()">
+          <i class="pi pi-credit-card"></i>
+          <span>Venda</span>
+        </a>
+      </li>
+    </ul>
 
-    <p-button
-      icon="pi pi-credit-card"
-      label="Efetuar Venda"
-      routerLink="/products"
-      styleClass="bg-indigo-800 p-button-secondary"
-      class="mr-2"
-      (onClick)="handleSaleProduct()"
-    ></p-button>
-  </div>
+    <!-- Actions -->
+    <div class="nav-actions">
+      <button class="icon-btn" (click)="toggle()" title="Alternar tema">
+        <i class="pi" [ngClass]="isDark ? 'pi-sun' : 'pi-moon'" style="color:#a5b4fc; font-size:1.1rem"></i>
+      </button>
 
-  <div class="p-toolbar-group-center">
-    <div class="position-element">
-      <img
-        src="../../../../assets/imagens/image.png"
-        class="icon"
-        (click)="toggle()"
-      />
+      <button class="logout-btn" (click)="handleLogout()">
+        <i class="pi pi-sign-out"></i>
+        <span>Sair</span>
+      </button>
+
+      <!-- Hamburguer -->
+      <button class="hamburger" (click)="toggleMenu()" aria-label="Menu">
+        <i class="pi" [ngClass]="menuOpen ? 'pi-times' : 'pi-bars'"></i>
+      </button>
     </div>
 
-    <p-button
-      *ngIf="showButton"
-      label="Secondary"
-      label="Export to PDF"
-      severity="secondary"
-      class="position-element"
-      (click)="downloadPdf()"
-    />
-    <p-button
-      label="Sair"
-      icon="pi pi-sign-out"
-      styleClass="p-button-danger"
-      (click)="handleLogout()"
-    >
-    </p-button>
   </div>
-</p-toolbar>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="mobile-drawer" [class.open]="menuOpen" (click)="menuOpen=false">
+  <div class="drawer-content" (click)="$event.stopPropagation()">
+    <div class="drawer-header">
+      <div class="brand">
+        <div class="brand-logo"><i class="pi pi-chart-bar"></i></div>
+        <span class="brand-name">StockControl</span>
+      </div>
+      <button class="drawer-close" (click)="menuOpen=false">
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+
+    <ul class="drawer-links">
+      <li><a routerLink="/dashboard" (click)="menuOpen=false"><i class="pi pi-home"></i> Dashboard</a></li>
+      <li><a routerLink="/products" (click)="menuOpen=false"><i class="pi pi-box"></i> Produtos</a></li>
+      <li><a routerLink="/categories" (click)="menuOpen=false"><i class="pi pi-tag"></i> Categorias</a></li>
+      <li><a (click)="handleSaleProduct(); menuOpen=false"><i class="pi pi-credit-card"></i> Efetuar Venda</a></li>
+      <li *ngIf="showButton"><a (click)="downloadPdf(); menuOpen=false"><i class="pi pi-file-pdf"></i> Exportar PDF</a></li>
+    </ul>
+
+    <button class="drawer-logout" (click)="handleLogout()">
+      <i class="pi pi-sign-out"></i> Sair da conta
+    </button>
+  </div>
+</div>
