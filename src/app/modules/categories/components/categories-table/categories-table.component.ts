@@ -7,7 +7,7 @@ import { GetCategoriesResponse } from 'src/app/models/interfaces/categories/resp
 @Component({
   selector: 'app-categories-table',
   templateUrl: './categories-table.component.html',
-  styleUrls: [],
+  styleUrls: ['./categories-table.component.scss'],
 })
 export class CategoriesTableComponent {
   @Input() public categories: Array<GetCategoriesResponse> = [];

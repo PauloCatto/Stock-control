@@ -37,19 +37,19 @@ export class CategoriesHomeComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
-          if (response.length > 0) {
-            this.categoriesDatas = response;
-          }
+          
+          this.categoriesDatas = response || [];
         },
         error: (err) => {
           console.log(err);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Erro',
-            detail: 'Erro ao buscar categorias',
-            life: 3000,
-          });
-          this.router.navigate(['/dashboard']);
+          if (err.status !== 0) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Erro ao buscar categorias',
+              life: 3000,
+            });
+          }
         },
       });
   }
@@ -101,14 +101,14 @@ export class CategoriesHomeComponent implements OnInit {
             });
 
             this.getAllCategories();
-            this.ref.close();
           },
           error: (err) => {
+            console.log(err);
             this.messageService.add({
               severity: 'error',
               summary: 'Erro',
-              detail: 'Erro ao remover categoria.',
-              life: 3000,
+              detail: err.error?.error || 'Erro ao remover categoria.',
+              life: 4000,
             });
             this.getAllCategories();
           },
