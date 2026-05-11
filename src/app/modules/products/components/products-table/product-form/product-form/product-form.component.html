@@ -1,138 +1,127 @@
-<!-- Formulário de Adição -->
-<div *ngIf="productAction?.event?.action === addProductAction">
-  <form [formGroup]="addProductForm" (ngSubmit)="handleSubmitAddProduct()">
-    <div class="card flex flex-column gap-3 p-4">
-      <input
-        pInputText
-        placeholder="Nome"
-        formControlName="name"
-        class="w-full"
-      />
-      <p-dropdown
-        styleClass="w-full"
-        [options]="categoriesDatas"
-        [(ngModel)]="selectedCategory"
-        optionLabel="name"
-        optionValue="id"
-        placeholder="Selecione uma categoria"
-        formControlName="category_id"
-      >
-      </p-dropdown>
-      <input
-        pInputText
-        placeholder="Preço"
-        formControlName="price"
-        class="w-full"
-      />
-      <input
-        pInputText
-        placeholder="Descrição"
-        formControlName="description"
-        class="w-full"
-      />
-      <input
-        pInputText
-        placeholder="Quantidade"
-        formControlName="amount"
-        class="w-full"
-      />
-      <div
-        class="flex flex-row justify-content-center align-content-center align-items-center m-1"
-      >
-        <p-button
-          [disabled]="!addProductForm.valid"
-          type="submit"
-          label="Concluir"
-        ></p-button>
-      </div>
+<!-- ── Formulário de Adição ── -->
+<div class="form-container" *ngIf="productAction?.event?.action === addProductAction">
+  <div class="form-section-title">
+    <div class="form-icon add-icon"><i class="pi pi-plus-circle"></i></div>
+    <div>
+      <h3>Novo Produto</h3>
+      <p>Preencha os dados para adicionar ao estoque</p>
     </div>
-  </form>
-</div>
+  </div>
 
-<!-- Formulário de Edição -->
-<div *ngIf="productAction?.event?.action === editProductAction">
-  <form [formGroup]="editProductForm" (ngSubmit)="handleSubmitEditProduct()">
-    <div class="card flex flex-column gap-3 p-4">
-      <input
-        pInputText
-        placeholder="Nome"
-        formControlName="name"
-        class="w-full"
-      />
-      <div *ngIf="renderDropdown">
-        <p-dropdown
-          styleClass="w-full"
-          [options]="categoriesDatas"
-          [(ngModel)]="selectedCategory"
-          optionLabel="name"
-          optionValue="id"
-          formControlName="category_id"
-        >
+  <form [formGroup]="addProductForm" (ngSubmit)="handleSubmitAddProduct()">
+    <div class="form-grid">
+      <div class="field full">
+        <label>Nome do Produto</label>
+        <input pInputText placeholder="Ex: Camiseta Branca M" formControlName="name" />
+      </div>
+      <div class="field">
+        <label>Categoria</label>
+        <p-dropdown [options]="categoriesDatas" [(ngModel)]="selectedCategory"
+          optionLabel="name" optionValue="id" placeholder="Selecione..."
+          formControlName="category_id" styleClass="w-full">
         </p-dropdown>
       </div>
-      <input
-        pInputText
-        placeholder="Preço"
-        formControlName="price"
-        class="w-full"
-      />
-      <input
-        pInputText
-        placeholder="Descrição"
-        formControlName="description"
-        class="w-full"
-      />
-      <input
-        pInputText
-        type="number"
-        placeholder="Quantidade"
-        formControlName="amount"
-        class="w-full"
-      />
-      <div
-        class="flex flex-row justify-content-center align-content-center align-items-center m-1"
-      >
-        <p-button
-          [disabled]="!editProductForm.valid"
-          type="submit"
-          label="Concluir"
-        ></p-button>
+      <div class="field">
+        <label>Preço (R$)</label>
+        <input pInputText placeholder="Ex: 49.90" formControlName="price" type="number" step="0.01" />
       </div>
+      <div class="field">
+        <label>Quantidade inicial</label>
+        <input pInputText placeholder="Ex: 100" formControlName="amount" type="number" />
+      </div>
+      <div class="field full">
+        <label>Descrição</label>
+        <input pInputText placeholder="Descreva o produto brevemente..." formControlName="description" />
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="submit-btn" [disabled]="!addProductForm.valid">
+        <i class="pi pi-check"></i> Adicionar Produto
+      </button>
     </div>
   </form>
 </div>
 
-<div *ngIf="productAction?.event?.action === saleProductAction">
-  <form [formGroup]="saleProductForm" (ngSubmit)="handleSubmitSaleProduct()">
-    <div class="card flex flex-column gap-3 p-4">
-      <p-dropdown
-        [options]="productsDatas"
-        styleClass="w-full"
-        [(ngModel)]="saleProductSelected"
-        optionLabel="name"
-        optionValue="id"
-        placeholder="Selecione um produto"
-        formControlName="product_id"
-        [filter]="true"
-        [panelStyle]="{ 'max-height': '200px', 'overflow-y': 'auto' }"
-      ></p-dropdown>
+<!-- ── Formulário de Edição ── -->
+<div class="form-container" *ngIf="productAction?.event?.action === editProductAction">
+  <div class="form-section-title">
+    <div class="form-icon edit-icon"><i class="pi pi-pencil"></i></div>
+    <div>
+      <h3>Editar Produto</h3>
+      <p>Atualize as informações do produto</p>
+    </div>
+  </div>
 
-      <input
-        type="number"
-        pInputText
-        placeholder="Quantidade"
-        formControlName="amount"
-      />
-      <div
-        class="flex flex-row justify-content-center align-content-center align-items-center"
-      >
-        <p-button
-          [disabled]="!saleProductForm.valid"
-          type="submit"
-          label="Concluir"
-        >
-        </p-button>
+  <form [formGroup]="editProductForm" (ngSubmit)="handleSubmitEditProduct()">
+    <div class="form-grid">
+      <div class="field full">
+        <label>Nome do Produto</label>
+        <input pInputText placeholder="Nome" formControlName="name" />
       </div>
+      <div class="field" *ngIf="renderDropdown">
+        <label>Categoria</label>
+        <p-dropdown [options]="categoriesDatas" [(ngModel)]="selectedCategory"
+          optionLabel="name" optionValue="id" formControlName="category_id" styleClass="w-full">
+        </p-dropdown>
+      </div>
+      <div class="field">
+        <label>Preço (R$)</label>
+        <input pInputText placeholder="Preço" formControlName="price" type="number" step="0.01" />
+      </div>
+      <div class="field">
+        <label>Quantidade</label>
+        <input pInputText type="number" placeholder="Quantidade" formControlName="amount" />
+      </div>
+      <div class="field full">
+        <label>Descrição</label>
+        <input pInputText placeholder="Descrição" formControlName="description" />
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="submit-btn edit" [disabled]="!editProductForm.valid">
+        <i class="pi pi-save"></i> Salvar Alterações
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- ── Formulário de Venda ── -->
+<div class="form-container" *ngIf="productAction?.event?.action === saleProductAction">
+  <div class="form-section-title">
+    <div class="form-icon sale-icon"><i class="pi pi-credit-card"></i></div>
+    <div>
+      <h3>Efetuar Venda</h3>
+      <p>Selecione o produto e a quantidade vendida</p>
+    </div>
+  </div>
+
+  <form [formGroup]="saleProductForm" (ngSubmit)="handleSubmitSaleProduct()">
+    <div class="form-grid">
+      <div class="field full">
+        <label>Produto</label>
+        <p-dropdown [options]="productsDatas" [(ngModel)]="saleProductSelected"
+          optionLabel="name" optionValue="id" placeholder="Selecione o produto..."
+          formControlName="product_id" [filter]="true" styleClass="w-full"
+          [panelStyle]="{ 'max-height': '200px', 'overflow-y': 'auto' }">
+          <ng-template let-item pTemplate="item">
+            <div class="dropdown-item">
+              <span class="item-name">{{ item.name }}</span>
+              <span class="item-stock" [ngClass]="item.amount === 0 ? 'stock-zero' : item.amount <= 5 ? 'stock-low' : 'stock-ok'">
+                {{ item.amount }} em estoque
+              </span>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+      <div class="field full">
+        <label>Quantidade a Vender</label>
+        <input type="number" pInputText placeholder="Ex: 5" formControlName="amount" min="1" />
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="submit-btn sale" [disabled]="!saleProductForm.valid">
+        <i class="pi pi-shopping-cart"></i> Confirmar Venda
+      </button>
     </div>
   </form>
 </div>

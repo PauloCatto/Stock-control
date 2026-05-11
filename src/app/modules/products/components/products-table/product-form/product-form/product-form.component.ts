@@ -18,7 +18,7 @@ import { SaleProductRequest } from 'src/app/models/interfaces/products/request/S
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
-  styleUrls: [],
+  styleUrls: ['./product-form.component.scss'],
 })
 export class ProductFormComponent {
   private readonly destroy$: Subject<void> = new Subject();
