@@ -32,7 +32,14 @@
               "node_modules/primeflex/primeflex.css"
             ],
             "scripts": [
-              "node_modules/chart.js/dist/chart.js"
+              "node_modules/chart.js/dist/chart.umd.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "canvg",
+              "raf",
+              "rgbcolor",
+              "html2canvas",
+              "core-js"
             ]
           },
           "configurations": {
