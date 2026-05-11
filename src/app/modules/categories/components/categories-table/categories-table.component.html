@@ -1,94 +1,67 @@
-<div class="grid">
-  <div class="col-12">
-    <p-card
-      styleClass="shadow-3 m-5 text-indigo-800"
-      header="Categorias de produtos"
-    >
-      <p-table
-        [value]="categories"
-        [(selection)]="categorySelected"
-        [rows]="10"
-        [paginator]="true"
-        [responsive]="true"
-        [tableStyle]="{ 'min-width': '75rem' }"
-        [rowHover]="true"
-        [showCurrentPageReport]="true"
-        dataKey="id"
-        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} products"
-      >
-        <ng-template pTemplate="header">
-          <tr>
-            <th pSortableColumn="name">
-              <div class="flex justify-content-between align-center">
-                <div class="flex justify-content-between align-center">
-                  Nome
-                </div>
-                <div class="flex justify-content-between align-center">
-                  <p-sortIcon field="name"></p-sortIcon>
-                  <p-columnFilter
-                    type="text"
-                    field="name"
-                    display="menu"
-                    matchMode="contains"
-                    [showMatchModes]="false"
-                    [showOperator]="false"
-                    [showAddButton]="false"
-                  ></p-columnFilter>
-                </div>
-              </div>
-            </th>
-            <th>
-              <div class="flex justify-content-center">
-                <p-button
-                  styleClass="p-button-info"
-                  icon="pi pi-plus"
-                  label="Adicionar"
-                  (onClick)="handleCategoryEvent(addCategoryAction)"
-                ></p-button>
-              </div>
-            </th>
-          </tr>
-        </ng-template>
+<div class="categories-wrapper">
 
-        <ng-template pTemplate="body" let-category>
-          <tr>
-            <td>{{ category?.name }}</td>
-            <td>
-              <div
-                class="flex justify-content-center gap-3 align-center align-items-center"
-              >
-                <button
-                  pButton
-                  pRipple
-                  icon="pi pi-pencil"
-                  pTooltip="Editar Categoria"
-                  tooltipPosition="top"
-                  class="p-button-rounded p-button-warning"
-                  (click)="
-                    handleCategoryEvent(
-                      editCategoryAction,
-                      category?.id,
-                      category?.name
-                    )
-                  "
-                ></button>
-                <button
-                  pButton
-                  pRipple
-                  icon="pi pi-trash"
-                  pTooltip="Deletar Categoria"
-                  tooltipPosition="top"
-                  class="p-button-rounded p-button-danger"
-                  (click)="
-                    handleDeleteCategoryEvent(category?.id, category?.name)
-                  "
-                ></button>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </p-card>
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-title">
+      <div class="page-title-icon">
+        <i class="pi pi-tag"></i>
+      </div>
+      <div>
+        <h1>Categorias</h1>
+        <p>Organize seus produtos em categorias</p>
+      </div>
+    </div>
+    <button class="add-btn" (click)="handleCategoryEvent(addCategoryAction)">
+      <i class="pi pi-plus"></i>
+      <span>Nova Categoria</span>
+    </button>
   </div>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-icon"><i class="pi pi-tags"></i></div>
+      <div class="stat-info">
+        <span class="stat-value">{{ categories.length }}</span>
+        <span class="stat-label">Categorias Cadastradas</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cards Grid -->
+  <div class="categories-grid" *ngIf="categories.length > 0">
+    <div class="category-card" *ngFor="let category of categories; let i = index">
+      <div class="category-card-icon" [ngClass]="'color-' + (i % 6)">
+        <i class="pi pi-tag"></i>
+      </div>
+      <div class="category-card-body">
+        <h3 class="category-name">{{ category?.name }}</h3>
+        <p class="category-id">ID: {{ category?.id | slice:0:8 }}…</p>
+      </div>
+      <div class="category-card-actions">
+        <button class="action-btn edit-btn"
+          pTooltip="Editar categoria" tooltipPosition="top"
+          (click)="handleCategoryEvent(editCategoryAction, category?.id, category?.name)">
+          <i class="pi pi-pencil"></i>
+        </button>
+        <button class="action-btn del-btn"
+          pTooltip="Deletar categoria" tooltipPosition="top"
+          (click)="handleDeleteCategoryEvent(category?.id || '', category?.name || '')">
+          <i class="pi pi-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="categories.length === 0">
+    <div class="empty-icon"><i class="pi pi-inbox"></i></div>
+    <h3>Nenhuma categoria encontrada</h3>
+    <p>Crie sua primeira categoria para organizar seus produtos.</p>
+    <button class="add-btn" (click)="handleCategoryEvent(addCategoryAction)">
+      <i class="pi pi-plus"></i> Criar categoria
+    </button>
+  </div>
+
   <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
 </div>

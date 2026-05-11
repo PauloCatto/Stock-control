@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { ChartModule } from 'primeng/chart';
+import { PasswordModule } from 'primeng/password';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,6 +32,7 @@ import { MatIconModule } from '@angular/material/icon';
     ToastModule,
     ChartModule,
     MatIconModule,
+    PasswordModule,
   ],
   providers: [CookieService, MessageService],
   bootstrap: [AppComponent],

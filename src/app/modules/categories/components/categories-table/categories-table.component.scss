@@ -1,0 +1,239 @@
+.categories-wrapper {
+  min-height: calc(100vh - 60px);
+  background: var(--bg-color);
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.3s ease;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.page-title-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #0891b2, #06b6d4);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.35);
+}
+
+.page-title h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  background: linear-gradient(135deg, #0891b2, #06b6d4);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.stats-bar {
+  background: var(--surface-color);
+  border-radius: 18px;
+  padding: 1.25rem 1.75rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  background: rgba(8, 145, 178, 0.1);
+  color: #0891b2;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.category-card {
+  background: var(--surface-color);
+  border-radius: 20px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  box-shadow: var(--card-shadow);
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  border-color: #06b6d4;
+}
+
+.category-card-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.color-0 {
+  background: linear-gradient(135deg, #6366f1, #818cf8);
+}
+
+.color-1 {
+  background: linear-gradient(135deg, #0891b2, #06b6d4);
+}
+
+.color-2 {
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+}
+
+.color-3 {
+  background: linear-gradient(135deg, #0f766e, #2dd4bf);
+}
+
+.color-4 {
+  background: linear-gradient(135deg, #b45309, #fbbf24);
+}
+
+.color-5 {
+  background: linear-gradient(135deg, #be185d, #f472b6);
+}
+
+.category-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.category-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.2rem;
+}
+
+.category-id {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.category-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.edit-btn {
+  background: rgba(180, 83, 9, 0.1);
+  color: #b45309;
+}
+
+.del-btn {
+  background: rgba(220, 38, 38, 0.1);
+  color: #dc2626;
+}
+
+.action-btn:hover {
+  transform: scale(1.1);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.empty-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  background: rgba(8, 145, 178, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  color: #0891b2;
+  margin: 0 auto 1.5rem;
+}
+
+.empty-state h3 {
+  color: var(--text-primary);
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  color: var(--text-secondary);
+}
