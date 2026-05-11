@@ -7,8 +7,7 @@ Sistema de Gerenciamento de Estoque de alta performance, desenvolvido com **Angu
 ![PrimeNG](https://img.shields.io/badge/PrimeNG-Components-vividblue)
 
 ## 🌐 Live Demo
-🔗 **Acesse o sistema aqui:** [https://stock-control-paulo.onrender.com](https://stock-control-paulo.onrender.com)
-*(Nota: Substitua pelo seu link final do Render se for diferente)*
+🔗 **Acesse o sistema aqui:** [https://stock-control-self.app](https://stock-control-self.vercel.app)
 
 ## ✨ Funcionalidades Principais
 
