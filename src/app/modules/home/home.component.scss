@@ -1,19 +1,223 @@
-.grid {
-  background-image: url("../../../assets/sean-pollock-PhYq704ffdA-unsplash.jpg") !important;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vmin;
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  background: #060918;
+  color: #f8fafc;
+  overflow: hidden;
+  position: relative;
 }
 
-@media screen and (min-width: 1400px) {
-  .grid {
-    background-position: top;
+.login-container::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: -20%;
+  width: 70%;
+  height: 70%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 65%);
+  border-radius: 50%;
+  z-index: 0;
+  animation: aurora1 8s ease-in-out infinite alternate;
+}
+
+.login-container::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  right: -20%;
+  width: 80%;
+  height: 80%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 65%);
+  border-radius: 50%;
+  z-index: 0;
+  animation: aurora2 10s ease-in-out infinite alternate;
+}
+
+@keyframes aurora1 {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+
+  to {
+    transform: translate(8%, 5%) scale(1.15);
   }
 }
 
-@media screen and (min-width: 1000px) {
-  .grid {
-    height: 100vmax;
+@keyframes aurora2 {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+
+  to {
+    transform: translate(-8%, -5%) scale(1.2);
+  }
+}
+
+.aurora-extra {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.08) 0%, transparent 65%);
+  border-radius: 50%;
+  z-index: 0;
+  animation: aurora1 12s ease-in-out infinite alternate-reverse;
+  pointer-events: none;
+}
+
+.left-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  z-index: 1;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(20px);
+}
+
+.left-panel h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #818cf8, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.left-panel p {
+  font-size: 1.25rem;
+  color: #94a3b8;
+  text-align: center;
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+.right-panel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  z-index: 1;
+}
+
+.glass-card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(16px);
+  transition: transform 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.card-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.card-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #f8fafc;
+}
+
+.card-header p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+:host ::ng-deep {
+
+  .p-inputtext,
+  .p-password input {
+    width: 100%;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f8fafc;
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s;
+  }
+
+  .p-inputtext:enabled:focus,
+  .p-password input:enabled:focus {
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.4);
+    border-color: #818cf8;
+    background: rgba(15, 23, 42, 0.8);
+  }
+
+  .p-password {
+    width: 100%;
+  }
+
+  .p-password i {
+    color: #94a3b8;
+    margin-top: -0.5rem;
+  }
+
+  .p-button {
+    width: 100%;
+    background: linear-gradient(to right, #6366f1, #8b5cf6);
+    border: none;
+    border-radius: 12px;
+    padding: 1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+  }
+
+  .p-button:hover {
+    background: linear-gradient(to right, #4f46e5, #7c3aed);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+  }
+
+  .p-button:disabled {
+    background: #334155;
+    color: #64748b;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.action-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+
+.link-btn {
+  color: #818cf8;
+  cursor: pointer;
+  transition: color 0.2s;
+  font-weight: 500;
+}
+
+.link-btn:hover {
+  color: #c084fc;
+}
+
+@media (max-width: 992px) {
+  .left-panel {
+    display: none;
   }
 }

@@ -15,7 +15,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class HomeComponent implements OnDestroy {
   private destroy$ = new Subject<void>();
-  loginCard = true;
+  activeCard: 'login' | 'signup' | 'changePassword' = 'login';
 
   loginForm = this.formBuilder.group({
     email: ['', Validators.required],
@@ -26,6 +26,12 @@ export class HomeComponent implements OnDestroy {
     name: ['', Validators.required],
     email: ['', Validators.required],
     password: ['', Validators.required],
+  });
+
+  changePasswordForm = this.formBuilder.group({
+    email: ['', Validators.required],
+    old_password: ['', Validators.required],
+    new_password: ['', Validators.required],
   });
 
   constructor(
@@ -82,7 +88,7 @@ export class HomeComponent implements OnDestroy {
         .subscribe({
           next: (response) => {
             this.signupForm.reset();
-            this.loginCard = true;
+            this.activeCard = 'login';
             this.messageService.add({
               severity: 'success',
               summary: 'Sucesso',
@@ -95,6 +101,35 @@ export class HomeComponent implements OnDestroy {
               severity: 'error',
               summary: 'Erro',
               detail: 'Erro ao criar Usuario',
+              life: 2000,
+            });
+            console.log(err);
+          },
+        });
+    }
+  }
+
+  onSubmitChangePasswordForm(): void {
+    if (this.changePasswordForm.valid) {
+      this.userService
+        .changePassword(this.changePasswordForm.value)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (response) => {
+            this.changePasswordForm.reset();
+            this.activeCard = 'login';
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Sucesso',
+              detail: 'Senha alterada com sucesso!',
+              life: 2000,
+            });
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Credenciais incorretas ao alterar senha',
               life: 2000,
             });
             console.log(err);
