@@ -8,6 +8,7 @@ import { GetAllProductsResponse } from 'src/app/models/interfaces/products/respo
 import { ProductsService } from 'src/app/services/products/products.service';
 import { EventAction } from 'src/app/models/interfaces/products/event/EventAction';
 import { ProductFormComponent } from '../../components/products-table/product-form/product-form/product-form.component';
+import { WebsocketService } from 'src/app/shared/services/websocket/websocket.service';
 
 @Component({
   selector: 'app-products-home',
@@ -25,11 +26,18 @@ export class ProductsHomeComponent implements OnInit {
     private router: Router,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private websocketService: WebsocketService
   ) {}
 
   ngOnInit(): void {
     this.getServiceProductsDatas();
+
+    this.websocketService.onProductUpdate()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.getAPIProductsDatas();
+      });
   }
 
   getServiceProductsDatas() {
@@ -68,8 +76,8 @@ export class ProductsHomeComponent implements OnInit {
     if (event) {
       this.ref = this.dialogService.open(ProductFormComponent, {
         header: event?.action,
-        width: '80%',
-        contentStyle: { overflow: 'auto' },
+        width: '60%',
+        contentStyle: { overflow: 'hidden' },
         baseZIndex: 10000,
         maximizable: true,
         data: {
