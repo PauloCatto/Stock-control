@@ -12,17 +12,25 @@ import {
 import { Subject, takeUntil } from 'rxjs';
 import { ChartData, ChartOptions } from 'chart.js';
 import { DashboardPdfService } from './dashboard-pdf.service';
+import { WebsocketService } from 'src/app/shared/services/websocket/websocket.service';
 
 @Component({
   selector: 'app-dashboard-home',
   templateUrl: './dashboard-home.component.html',
-  styleUrls: [],
+  styleUrls: ['./dashboard-home.component.scss'],
 })
 export class DashboardHomeComponent implements OnInit, OnDestroy {
   @ViewChild('chartContainer') chartContainer!: ElementRef;
 
   productsList: Array<GetAllProductsResponse> = [];
   private destroy$ = new Subject<void>();
+
+  totalStock = 0;
+  totalValue = 0;
+  zeroStockCount = 0;
+  showButton = true;
+  topProducts: Array<GetAllProductsResponse> = [];
+  criticalProducts: Array<GetAllProductsResponse> = [];
 
   public productsChartDatas!: ChartData;
   public productsChartOptions!: ChartOptions;
@@ -31,11 +39,18 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     private productsService: ProductsService,
     private messageService: MessageService,
     private productsDtService: ProductsDataTransferService,
-    private dashboardPdfService: DashboardPdfService
-  ) {}
+    private dashboardPdfService: DashboardPdfService,
+    private websocketService: WebsocketService
+  ) { }
 
   ngOnInit(): void {
     this.getProductsData();
+
+    this.websocketService.onProductUpdate()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.getProductsData();
+      });
   }
 
   getProductsData() {
@@ -47,6 +62,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
           if (response.length > 0) {
             this.productsList = response;
             this.productsDtService.setProductsDatas(this.productsList);
+            this.computeKpis();
             this.setProductsChartConfig();
             this.dashboardPdfService.setChartElement(
               this.chartContainer.nativeElement
@@ -55,35 +71,53 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.log(err);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Erro',
-            detail: 'Erro ao buscar pedidos',
-            life: 2500,
-          });
+          if (err.status !== 0) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Erro ao buscar produtos',
+              life: 2500,
+            });
+          }
         },
       });
   }
 
+  computeKpis(): void {
+    if (this.productsList.length > 0) {
+      this.totalStock = this.productsList.reduce((sum, p) => sum + (p.amount || 0), 0);
+      this.totalValue = this.productsList.reduce((sum, p) => sum + ((p.amount || 0) * (parseFloat(p.price) || 0)), 0);
+      this.zeroStockCount = this.productsList.filter(p => !p.amount || p.amount === 0).length;
+
+      
+      this.topProducts = [...this.productsList]
+        .sort((a, b) => (b.amount || 0) - (a.amount || 0))
+        .slice(0, 5);
+
+      
+      this.criticalProducts = this.productsList
+        .filter(p => (p.amount || 0) <= 5)
+        .sort((a, b) => (a.amount || 0) - (b.amount || 0));
+    }
+  }
+
+  exportPdf(): void {
+    this.dashboardPdfService.generatePdf();
+  }
+
   setProductsChartConfig(): void {
     if (this.productsList.length > 0) {
-      const documentStyle = getComputedStyle(document.documentElement);
-      const textColor = documentStyle.getPropertyValue('--text-color');
-      const textColorSecondary = documentStyle.getPropertyValue(
-        '--text-color-secondary'
-      );
-      const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
       this.productsChartDatas = {
-        labels: this.productsList.map((element) => element?.name),
+        labels: this.productsList.map((p) => p?.name),
         datasets: [
           {
-            label: 'Quantidade',
-            backgroundColor: documentStyle.getPropertyValue('--indigo-400'),
-            borderColor: documentStyle.getPropertyValue('--indigo-400'),
-            hoverBackgroundColor:
-              documentStyle.getPropertyValue('--indigo-500'),
-            data: this.productsList.map((element) => element?.amount),
+            label: 'Quantidade em estoque',
+            backgroundColor: 'rgba(99, 102, 241, 0.75)',
+            borderColor: '#6366f1',
+            borderWidth: 2,
+            borderRadius: 8,
+            hoverBackgroundColor: 'rgba(99, 102, 241, 0.95)',
+            data: this.productsList.map((p) => p?.amount),
           },
         ],
       };
@@ -93,31 +127,25 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
         aspectRatio: 0.8,
         plugins: {
           legend: {
-            labels: {
-              color: textColor,
-            },
+            labels: { color: '#475569', font: { family: 'Inter', size: 13 } },
+          },
+          tooltip: {
+            backgroundColor: '#1e293b',
+            titleColor: '#f1f5f9',
+            bodyColor: '#94a3b8',
+            cornerRadius: 10,
+            padding: 12,
           },
         },
-
         scales: {
           x: {
-            ticks: {
-              color: textColorSecondary,
-              font: {
-                weight: 500,
-              },
-            },
-            grid: {
-              color: surfaceBorder,
-            },
+            ticks: { color: '#64748b', font: { weight: 500 } },
+            grid: { color: '#f1f5f9' },
           },
           y: {
-            ticks: {
-              color: textColorSecondary,
-            },
-            grid: {
-              color: surfaceBorder,
-            },
+            ticks: { color: '#64748b' },
+            grid: { color: '#f1f5f9' },
+            beginAtZero: true,
           },
         },
       };

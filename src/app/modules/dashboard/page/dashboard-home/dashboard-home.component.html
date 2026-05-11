@@ -1,16 +1,124 @@
 <app-toolbar-navigation></app-toolbar-navigation>
 
-<div class="grid" #chartContainer>
-  <div class="col-12">
-    <p-card
-      header="Quantidade de produtos em estoque"
-      styleClass="shadow-3 m-5 text-indigo-800"
-    >
-      <p-chart
-        type="bar"
-        [data]="productsChartDatas"
-        [options]="productsChartOptions"
-      ></p-chart>
-    </p-card>
+<div class="dashboard-wrapper">
+
+  <!-- Hero / Boas-vindas -->
+  <div class="hero-section">
+    <div class="hero-text">
+      <h1>Bem-vindo ao <span class="gradient-text">Stock Control</span></h1>
+      <p>Acompanhe seu estoque em tempo real, visualize métricas e gerencie seus produtos com facilidade.</p>
+    </div>
+    <div class="hero-actions">
+      <a routerLink="/products" class="hero-btn-solid">
+        <i class="pi pi-plus"></i> Adicionar Produto
+      </a>
+      <a routerLink="/categories" class="hero-btn-outline-link">
+        <i class="pi pi-th-large"></i> Ver Categorias
+      </a>
+    </div>
   </div>
+
+  <!-- KPIs Cards -->
+  <div class="kpi-grid">
+    <div class="kpi-card kpi-purple">
+      <div class="kpi-icon"><i class="pi pi-box"></i></div>
+      <div class="kpi-info">
+        <span class="kpi-label">Total de Produtos</span>
+        <span class="kpi-value">{{ productsList.length }}</span>
+      </div>
+    </div>
+    <div class="kpi-card kpi-indigo">
+      <div class="kpi-icon"><i class="pi pi-chart-bar"></i></div>
+      <div class="kpi-info">
+        <span class="kpi-label">Itens em Estoque</span>
+        <span class="kpi-value">{{ totalStock }}</span>
+      </div>
+    </div>
+    <div class="kpi-card kpi-cyan">
+      <div class="kpi-icon"><i class="pi pi-tag"></i></div>
+      <div class="kpi-info">
+        <span class="kpi-label">Valor Total</span>
+        <span class="kpi-value">{{ totalValue | currency:'BRL':'symbol':'1.0-0' }}</span>
+      </div>
+    </div>
+    <div class="kpi-card kpi-rose">
+      <div class="kpi-icon"><i class="pi pi-exclamation-triangle"></i></div>
+      <div class="kpi-info">
+        <span class="kpi-label">Estoque Zerado</span>
+        <span class="kpi-value">{{ zeroStockCount }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Linha: Gráfico + Top Produtos -->
+  <div class="main-row">
+
+    <!-- Gráfico -->
+    <div class="chart-section" #chartContainer>
+      <div class="section-header">
+        <h2>Quantidade em estoque por produto</h2>
+        <button *ngIf="showButton" class="pdf-action-btn" (click)="exportPdf()">
+          <i class="pi pi-file-pdf"></i> PDF
+        </button>
+      </div>
+      <div class="chart-wrapper">
+        <p-chart type="bar" [data]="productsChartDatas" [options]="productsChartOptions" height="260"></p-chart>
+      </div>
+    </div>
+
+    <!-- Top produtos -->
+    <div class="top-products-section">
+      <div class="section-header">
+        <h2>Top Produtos</h2>
+        <span class="badge-info">por estoque</span>
+      </div>
+
+      <div class="top-empty" *ngIf="topProducts.length === 0">
+        <i class="pi pi-inbox"></i> Nenhum produto cadastrado
+      </div>
+
+      <ul class="top-list">
+        <li *ngFor="let prod of topProducts; let i = index" class="top-item">
+          <div class="top-rank" [ngClass]="{
+            'rank-1': i === 0,
+            'rank-2': i === 1,
+            'rank-3': i === 2,
+            'rank-other': i > 2
+          }">
+            {{ i + 1 }}
+          </div>
+          <div class="top-info">
+            <span class="top-name">{{ prod.name }}</span>
+            <span class="top-cat">{{ prod.category?.name }}</span>
+          </div>
+          <div class="top-amount">
+            {{ prod.amount }} un
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Alertas de Estoque Crítico -->
+  <div class="alerts-section" *ngIf="criticalProducts.length > 0">
+    <div class="section-header">
+      <h2><i class="pi pi-exclamation-circle" style="color:#e11d48"></i> Atenção: Estoque Crítico</h2>
+    </div>
+    <div class="alerts-grid">
+      <div class="alert-card" *ngFor="let p of criticalProducts">
+        <div class="alert-icon">
+          <i class="pi" [ngClass]="p.amount === 0 ? 'pi-times-circle' : 'pi-exclamation-triangle'"></i>
+        </div>
+        <div class="alert-info">
+          <span class="alert-name">{{ p.name }}</span>
+          <span class="alert-msg" [ngClass]="p.amount === 0 ? 'msg-zero' : 'msg-low'">
+            {{ p.amount === 0 ? 'Sem estoque' : p.amount + ' unidades restantes' }}
+          </span>
+        </div>
+        <a routerLink="/products" class="alert-action">Gerenciar</a>
+      </div>
+    </div>
+  </div>
+
 </div>
