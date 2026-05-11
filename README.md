@@ -1,57 +1,54 @@
-# Stock Control
+# 📦 Stock Control - Frontend Premium
 
-Este projeto tem como objetivo gerenciar o controle de estoque de produtos. Ele permite gerenciar o cadastro de usuários, produtos, categorias, vendas e visualizar gráficos sobre o desempenho do estoque.
+Sistema de Gerenciamento de Estoque de alta performance, desenvolvido com **Angular 17+** e focado em uma experiência de usuário (UX) excepcional.
 
-## **Funcionalidades**
+![Aesthetics](https://img.shields.io/badge/Design-Premium-indigo)
+![Angular](https://img.shields.io/badge/Angular-17+-dd0031?logo=angular)
+![PrimeNG](https://img.shields.io/badge/PrimeNG-Components-vividblue)
 
-- **Tela de Login:** O usuário pode criar uma conta ou se autenticar para acessar o sistema.
-  <br>
-  <br>
-  ![2025-03-15_14-44-30](https://github.com/user-attachments/assets/5a4356ad-9afc-497b-ae07-3800492c8b79)
-  <br>
-- **Dashboard:** Exibe um gráfico com os itens adicionados e permite a exportação de dados em PDF.
-  <br>
-  <br>
-  ![2025-03-15_14-45-18](https://github.com/user-attachments/assets/38a0fde8-ec4d-43bb-b473-ac2dca8fe0b1)
-  <br>
-- **Tela de Produtos:** Permite adicionar, editar e excluir produtos no estoque.
-  <br>
-  <br>
-  ![2025-03-15_14-45-38](https://github.com/user-attachments/assets/2b1f5714-dc83-4ff8-9530-45e95d9093cf)
-  <br>
-- **Tela de Categorias:** Permite gerenciar as categorias de produtos, permitindo adição, edição e remoção.
-  <br>
-  <br>
-  ![2025-03-15_14-45-51](https://github.com/user-attachments/assets/e80fab66-fe7a-49e3-b2e0-d67bcfb7b8f5)
-  <br>
-- **Tela de Vendas:** Realiza transações de venda, com reflexo automático no Dashboard.
-  <br>
-  <br>
-  
-  ![2025-03-15_14-46-10](https://github.com/user-attachments/assets/51578570-e7b4-4827-8923-bfc1ffe5d2a2)
+## 🌐 Live Demo
+🔗 **Acesse o sistema aqui:** [https://stock-control-paulo.onrender.com](https://stock-control-paulo.onrender.com)
+*(Nota: Substitua pelo seu link final do Render se for diferente)*
 
-  <br>
+## ✨ Funcionalidades Principais
 
-## **Testes Unitários**
+*   📊 **Dashboard Inteligente:** Visualização em tempo real de KPIs (Total de Produtos, Itens em Estoque, Valor Total).
+*   📈 **Análise de Dados:** Gráficos dinâmicos e ranking de "Top Produtos" com maior giro.
+*   🌓 **Dark/Light Mode:** Suporte completo a temas dinâmicos com transições suaves.
+*   🛡️ **Gestão de Categorias:** Controle robusto de categorias com travas de segurança para integridade de dados.
+*   🛒 **Venda de Produtos:** Fluxo otimizado para baixa de estoque imediata.
+*   📄 **Exportação PDF:** Geração de relatórios diretamente do dashboard.
+*   🔔 **Alertas de Estoque:** Notificações visuais automáticas para produtos com estoque baixo ou zerado.
 
-A cobertura dos testes unitários foram configuradas para garantir uma cobertura mínima de 70%. Aqui estão os resultados dos testes:
-<br>
-<br>
-![2025-03-15_14-44-49](https://github.com/user-attachments/assets/b571ac52-a294-4b09-8981-b47e96a4cd39)
-<br>
+## 🛠️ Tecnologias Utilizadas
 
-## **Tecnologias Utilizadas**
+*   **Angular 17:** Framework principal.
+*   **PrimeNG:** Suite de componentes UI premium.
+*   **Chart.js:** Visualização de dados estatísticos.
+*   **RxJS:** Gerenciamento de fluxos de dados assíncronos.
+*   **Socket.io-client:** Comunicação em tempo real com o backend.
+*   **SCSS:** Estilização avançada com Design Tokens (Variáveis CSS).
 
-- **Frontend:** Angular 15, RxJS, PrimeNG, Angular Material
-- **Backend:** https://github.com/PauloCatto/API-stock-control
-- **Gráficos:** Chart.js
-- **Exportação:** jsPDF
+## 🚀 Como Iniciar
 
-Passo a Passo para Executar o Projeto
-1. Clonar o repositório: git clone https://github.com/usuario/stock-control.git
-2. Navegar até o diretório do projeto: cd stock-control
-3. Instalar as dependências: npm install
-4. Iniciar o servidor de desenvolvimento
-Para rodar o projeto localmente, use o seguinte comando: ng serve -o
+### Pré-requisitos
+*   Node.js (v18+)
+*   Angular CLI
 
-Isso ira iniciar o servidor de desenvolvimento e abrir o projeto em http://localhost:4200/, apenas se o backend ja estiver sido iniciado.
+### Instalação
+1. Clone o repositório
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+3. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm start
+   ```
+4. Acesse `http://localhost:4200`
+
+## 🎨 Design System
+O projeto utiliza um sistema de cores baseado em variáveis CSS localizadas em `src/styles.scss`, facilitando a manutenção e a consistência visual em todo o ecossistema da aplicação.
+
+---
+Desenvolvido por [Paulo Catto](https://github.com/PauloCatto)
