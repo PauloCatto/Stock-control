@@ -1,5 +1,5 @@
 import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ProductEvent } from 'src/app/models/enums/products/ProductsEvent';
 import { EventAction } from 'src/app/models/interfaces/products/event/EventAction';
 import { DeleteProductAction } from 'src/app/models/interfaces/products/event/DeleteProductActions';
@@ -7,9 +7,9 @@ import { DeleteProductAction } from 'src/app/models/interfaces/products/event/De
 @Component({
   selector: 'app-products-table',
   templateUrl: './products-table.component.html',
-  styleUrls: [],
+  styleUrls: ['./products-table.component.scss'],
 })
-export class ProductsTableComponent implements OnInit{
+export class ProductsTableComponent implements OnInit, OnChanges {
   @Input() products: Array<GetAllProductsResponse> = [];
   @Output() productEvent = new EventEmitter<EventAction>();
   @Output() deleteProductEvent = new EventEmitter<DeleteProductAction>();
@@ -18,7 +18,18 @@ export class ProductsTableComponent implements OnInit{
   public addProductEvent = ProductEvent.ADD_PRODUCT_EVENT;
   public editProductEvent = ProductEvent.EDIT_PRODUCT_EVENT;
 
-  ngOnInit() {}
+  inStockCount = 0;
+  zeroStockCount = 0;
+
+  ngOnInit() { this.computeSummary(); }
+
+  ngOnChanges() { this.computeSummary(); }
+
+  computeSummary(): void {
+    this.zeroStockCount = this.products.filter(p => !p.amount || p.amount === 0).length;
+    this.inStockCount = this.products.length - this.zeroStockCount;
+  }
+
 
   handleProductEvent(action: string, id?: string): void {
     if (action && action !== '') {

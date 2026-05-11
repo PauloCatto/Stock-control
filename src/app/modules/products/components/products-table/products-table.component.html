@@ -1,166 +1,130 @@
-<div class="grid">
-  <div class="col-12">
-    <p-card
-      styleClass="shadow-3 m-5 text-indigo-800"
-      header="Produtos em estoque"
-    >
-      <p-table
-        #productsTable
-        [value]="products"
-        [rows]="10"
-        [paginator]="true"
-        [responsive]="true"
-        [globalFilterFields]="['name', 'amount']"
-        [tableStyle]="{ 'min-width': '75rem' }"
-        [(selection)]="productSelected"
-        [rowHover]="true"
-        [showCurrentPageReport]="true"
-        dataKey="id"
-        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} produtos"
-      >
-        <ng-template pTemplate="header">
-          <tr>
-            <th pSortableColumn="name">
-              <div class="flex justify-content-between align-items-center">
-                Nome
-              </div>
-              <div class="flex justify-content-between align-items-center">
-                <p-sortIcon field="name"></p-sortIcon>
-                <p-columnFilter
-                  type="text"
-                  field="name"
-                  display="menu"
-                  matchMode="contains"
-                  [showMatchModes]="false"
-                  [showOperator]="false"
-                  [showAddButton]="false"
-                ></p-columnFilter>
-              </div>
-            </th>
+<div class="products-wrapper">
 
-            <th pSortableColumn="amount">
-              <div class="flex justify-content-between align-items-center">
-                Quantidade
-              </div>
-              <div class="flex justify-content-between align-items-center">
-                <p-sortIcon field="amount"></p-sortIcon>
-                <p-columnFilter
-                  type="text"
-                  field="amount"
-                  display="menu"
-                  matchMode="contains"
-                  [showMatchModes]="false"
-                  [showOperator]="false"
-                  [showAddButton]="false"
-                ></p-columnFilter>
-              </div>
-            </th>
-
-            <th pSortableColumn="price">
-              <div class="flex justify-content-between align-items-center">
-                Preço
-              </div>
-              <div class="flex justify-content-between align-items-center">
-                <p-sortIcon field="price"></p-sortIcon>
-                <p-columnFilter
-                  type="text"
-                  field="price"
-                  display="menu"
-                  matchMode="contains"
-                  [showMatchModes]="false"
-                  [showOperator]="false"
-                  [showAddButton]="false"
-                ></p-columnFilter>
-              </div>
-            </th>
-
-            <th pSortableColumn="description">
-              <div class="flex justify-content-between align-items-center">
-                Descrição
-              </div>
-              <div class="flex justify-content-between align-items-center">
-                <p-sortIcon field="description"></p-sortIcon>
-                <p-columnFilter
-                  type="text"
-                  field="description"
-                  display="menu"
-                  matchMode="contains"
-                  [showMatchModes]="false"
-                  [showOperator]="false"
-                  [showAddButton]="false"
-                ></p-columnFilter>
-              </div>
-            </th>
-
-            <th pSortableColumn="category.name">
-              <div class="flex justify-content-between align-items-center">
-                Categoria
-              </div>
-              <div class="flex justify-content-between align-items-center">
-                <p-sortIcon field="category.name"></p-sortIcon>
-                <p-columnFilter
-                  type="text"
-                  field="category.name"
-                  display="menu"
-                  matchMode="contains"
-                  [showMatchModes]="false"
-                  [showOperator]="false"
-                  [showAddButton]="false"
-                ></p-columnFilter>
-              </div>
-            </th>
-
-            <th>
-              <div class="flex justify-content-center">
-                <p-button
-                  styleClass="p-button-info"
-                  icon="pi pi-plus"
-                  label="Adicionar"
-                  (onClick)="handleProductEvent(addProductEvent)"
-                >
-                </p-button>
-              </div>
-            </th>
-          </tr>
-        </ng-template>
-
-        <ng-template pTemplate="body" let-product>
-          <tr>
-            <td>{{ product?.name }}</td>
-            <td>{{ product?.amount }}</td>
-            <td>{{ product?.price | currency : "BRL" }}</td>
-            <td [pTooltip]="product?.description" tooltipPosition="top">
-              {{ product?.description | shorten : 25 }}
-            </td>
-            <td>{{ product?.category?.name }}</td>
-            <td>
-              <div
-                class="flex justify-content-center gap-3 align-content-center align-items-center"
-              >
-                <button
-                  pButton
-                  pRipple
-                  icon="pi pi-pencil"
-                  class="p-button-rounded p-button-blue"
-                  pTooltip="Editar produto"
-                  tooltipPosition="top"
-                  (click)="handleProductEvent(editProductEvent, product?.id)"
-                ></button>
-
-                <button
-                  pButton
-                  pRipple
-                  icon="pi pi-trash"
-                  class="p-button-rounded p-button-danger"
-                  pTooltip="Remover produto"
-                  tooltipPosition="top"
-                  (click)="handleDeleteProduct(product?.id, product?.name)"
-                ></button>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </p-card>
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-title">
+      <div class="page-title-icon">
+        <i class="pi pi-box"></i>
+      </div>
+      <div>
+        <h1>Produtos</h1>
+        <p>Gerencie todos os itens do seu estoque</p>
+      </div>
+    </div>
+    <button class="add-btn" (click)="handleProductEvent(addProductEvent)">
+      <i class="pi pi-plus"></i>
+      <span>Novo Produto</span>
+    </button>
   </div>
+
+  <!-- Summary Bar -->
+  <div class="summary-bar">
+    <div class="summary-item">
+      <span class="summary-value">{{ products.length }}</span>
+      <span class="summary-label">Total de produtos</span>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-item">
+      <span class="summary-value">{{ inStockCount }}</span>
+      <span class="summary-label">Em estoque</span>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-item out">
+      <span class="summary-value">{{ zeroStockCount }}</span>
+      <span class="summary-label">Estoque zerado</span>
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="table-card">
+    <p-table
+      #productsTable
+      [value]="products"
+      [rows]="10"
+      [paginator]="true"
+      [globalFilterFields]="['name', 'amount', 'price', 'category.name']"
+      [(selection)]="productSelected"
+      [rowHover]="true"
+      [showCurrentPageReport]="true"
+      dataKey="id"
+      currentPageReportTemplate="Mostrando {first}–{last} de {totalRecords} produtos"
+      [sortMode]="'multiple'"
+      styleClass="p-datatable-sm"
+    >
+      <!-- Search bar no caption -->
+      <ng-template pTemplate="caption">
+        <div class="table-caption">
+          <span class="p-input-icon-left search-wrap">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" placeholder="Buscar produto…"
+              (input)="productsTable.filterGlobal($any($event.target).value, 'contains')" />
+          </span>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="name">
+            Nome <p-sortIcon field="name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="category.name">
+            Categoria <p-sortIcon field="category.name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="amount" style="width:130px; text-align:center">
+            Qtd. <p-sortIcon field="amount"></p-sortIcon>
+          </th>
+          <th pSortableColumn="price" style="width:140px">
+            Preço <p-sortIcon field="price"></p-sortIcon>
+          </th>
+          <th>Descrição</th>
+          <th style="width:110px; text-align:center">Ações</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-product>
+        <tr class="table-row">
+          <td>
+            <div class="product-name-cell">
+              <div class="product-avatar">{{ product?.name?.charAt(0) | uppercase }}</div>
+              <span class="product-name">{{ product?.name }}</span>
+            </div>
+          </td>
+          <td>
+            <span class="category-badge">{{ product?.category?.name }}</span>
+          </td>
+          <td style="text-align:center">
+            <span class="stock-badge" [ngClass]="product?.amount === 0 ? 'stock-zero' : product?.amount <= 5 ? 'stock-low' : 'stock-ok'">
+              {{ product?.amount }}
+            </span>
+          </td>
+          <td class="price-cell">{{ product?.price | currency:'BRL' }}</td>
+          <td class="desc-cell" [pTooltip]="product?.description" tooltipPosition="top">
+            {{ product?.description | shorten:30 }}
+          </td>
+          <td>
+            <div class="action-btns">
+              <button class="action-btn edit-btn" pTooltip="Editar" tooltipPosition="top"
+                (click)="handleProductEvent(editProductEvent, product?.id)">
+                <i class="pi pi-pencil"></i>
+              </button>
+              <button class="action-btn del-btn" pTooltip="Remover" tooltipPosition="top"
+                (click)="handleDeleteProduct(product?.id, product?.name)">
+                <i class="pi pi-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6" class="empty-message">
+            <i class="pi pi-inbox" style="font-size:2rem; opacity:0.3"></i>
+            <p>Nenhum produto encontrado.</p>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
 </div>

@@ -1,0 +1,212 @@
+.products-wrapper {
+  min-height: calc(100vh - 60px);
+  background: var(--bg-color);
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.3s ease;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.page-title-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+}
+
+.page-title h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 0.15rem;
+}
+
+.page-title p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+  transition: all 0.2s;
+}
+
+.summary-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 3rem;
+  background: var(--surface-color);
+  border-radius: 14px;
+  padding: 1.25rem 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--card-shadow);
+  transition: all 0.3s ease;
+}
+
+.summary-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.summary-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.summary-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.summary-divider {
+  width: 1px;
+  height: 30px;
+  background: var(--border-color);
+}
+
+.summary-item.out .summary-value {
+  color: #e11d48;
+}
+
+.table-card {
+  background: var(--surface-color);
+  border-radius: 18px;
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.table-caption {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1.25rem;
+}
+
+.search-wrap {
+  position: relative;
+}
+
+.search-wrap i {
+  position: absolute;
+  left: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+}
+
+.search-wrap input {
+  padding: 0.6rem 1rem 0.6rem 2.5rem;
+  background: var(--bg-color);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  width: 260px;
+  outline: none;
+}
+
+:host ::ng-deep {
+  .p-datatable .p-datatable-thead>tr>th {
+    background: var(--surface-color) !important;
+    color: var(--text-secondary) !important;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--border-color) !important;
+    padding: 1rem !important;
+  }
+
+  .p-datatable .p-datatable-tbody>tr>td {
+    padding: 1rem !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+    background: var(--surface-color) !important;
+  }
+
+  .p-datatable .p-datatable-tbody>tr:hover td {
+    background: rgba(99, 102, 241, 0.03) !important;
+  }
+}
+
+.action-btns {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+.action-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.edit-btn {
+  background: rgba(124, 58, 237, 0.1);
+  color: #7c3aed;
+}
+
+.del-btn {
+  background: rgba(225, 29, 72, 0.1);
+  color: #e11d48;
+}
+
+.action-btn:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .summary-bar {
+    gap: 1.5rem;
+    padding: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .summary-divider {
+    display: none;
+  }
+}
