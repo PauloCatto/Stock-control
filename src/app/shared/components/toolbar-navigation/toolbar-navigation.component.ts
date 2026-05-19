@@ -45,7 +45,7 @@ export class ToolbarNavigationComponent {
 
   handleLogout(): void {
     this.cookieService.delete('USER_INFO');
-    this.router.navigate(['/home']);
+    this.router.navigate(['/login']);
   }
 
   handleSaleProduct(): void {

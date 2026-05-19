@@ -78,11 +78,11 @@ describe('ToolbarNavigationComponent', () => {
     expect(dashboardPdfServiceMock.generatePdf).toHaveBeenCalled();
   });
 
-  it('should delete USER_INFO cookie and navigate to /home when handleLogout is called', () => {
+  it('should delete USER_INFO cookie and navigate to /login when handleLogout is called', () => {
     component.handleLogout();
 
     expect(cookieServiceMock.delete).toHaveBeenCalledWith('USER_INFO');
-    expect(routerMock.navigate).toHaveBeenCalledWith(['/home']);
+    expect(routerMock.navigate).toHaveBeenCalledWith(['/login']);
   });
 
   it('should open ProductFormComponent dialog when handleSaleProduct is called', () => {
