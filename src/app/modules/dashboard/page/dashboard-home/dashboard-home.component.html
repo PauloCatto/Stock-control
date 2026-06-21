@@ -57,11 +57,20 @@
     <div class="chart-section" #chartContainer>
       <div class="section-header">
         <h2>Quantidade em estoque por produto</h2>
-        <button *ngIf="showButton" class="pdf-action-btn" (click)="exportPdf()">
+        <button *ngIf="showButton && productsList.length > 0" class="pdf-action-btn" (click)="exportPdf()">
           <i class="pi pi-file-pdf"></i> PDF
         </button>
       </div>
-      <div class="chart-wrapper">
+      <!-- Empty state: sem produtos -->
+      <div class="chart-empty-state" *ngIf="productsList.length === 0">
+        <i class="pi pi-chart-bar chart-empty-icon"></i>
+        <p class="chart-empty-title">Nenhum dado para exibir</p>
+        <p class="chart-empty-sub">Cadastre produtos para visualizar o gráfico de estoque.</p>
+        <a routerLink="/products" class="chart-empty-btn">
+          <i class="pi pi-plus"></i> Adicionar Produto
+        </a>
+      </div>
+      <div class="chart-wrapper" *ngIf="productsList.length > 0">
         <p-chart type="bar" [data]="productsChartDatas" [options]="productsChartOptions" height="260"></p-chart>
       </div>
     </div>

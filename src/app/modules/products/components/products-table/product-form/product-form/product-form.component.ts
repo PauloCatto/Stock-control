@@ -262,6 +262,10 @@ export class ProductFormComponent {
     }
   }
 
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
