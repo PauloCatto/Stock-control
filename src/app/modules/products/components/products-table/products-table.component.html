@@ -54,11 +54,12 @@
       <!-- Search bar no caption -->
       <ng-template pTemplate="caption">
         <div class="table-caption">
-          <span class="p-input-icon-left search-wrap">
+          <div class="search-wrap">
             <i class="pi pi-search"></i>
             <input pInputText type="text" placeholder="Buscar produto…"
+              [disabled]="products.length === 0"
               (input)="productsTable.filterGlobal($any($event.target).value, 'contains')" />
-          </span>
+          </div>
         </div>
       </ng-template>
 
