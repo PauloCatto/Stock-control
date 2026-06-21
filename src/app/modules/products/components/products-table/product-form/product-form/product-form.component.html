@@ -122,6 +122,7 @@
         <p-dropdown [options]="productsDatas" [(ngModel)]="saleProductSelected"
           optionLabel="name" optionValue="id" placeholder="Selecione o produto..."
           formControlName="product_id" [filter]="true" styleClass="w-full"
+          [disabled]="productsDatas.length === 0"
           [panelStyle]="{ 'max-height': '200px', 'overflow-y': 'auto' }">
           <ng-template let-item pTemplate="item">
             <div class="dropdown-item">
@@ -135,11 +136,13 @@
       </div>
       <div class="field full">
         <label>Quantidade a Vender</label>
-        <input type="number" pInputText placeholder="Ex: 5" formControlName="amount" min="1" />
+        <input type="number" pInputText placeholder="Ex: 5" formControlName="amount" min="1"
+          [attr.disabled]="productsDatas.length === 0 ? true : null" />
       </div>
     </div>
     <div class="form-actions">
-      <button type="submit" class="submit-btn sale" [disabled]="!saleProductForm.valid">
+      <button type="submit" class="submit-btn sale"
+        [disabled]="!saleProductForm.valid || productsDatas.length === 0">
         <i class="pi pi-shopping-cart"></i> Confirmar Venda
       </button>
     </div>

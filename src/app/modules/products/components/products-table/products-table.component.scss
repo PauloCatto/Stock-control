@@ -123,14 +123,17 @@
 
 .search-wrap {
   position: relative;
+  display: inline-flex;
+  align-items: center;
 }
 
 .search-wrap i {
   position: absolute;
   left: 0.8rem;
-  top: 50%;
-  transform: translateY(-50%);
   color: var(--text-secondary);
+  pointer-events: none;
+  line-height: 1;
+  font-size: 0.9rem;
 }
 
 .search-wrap input {
@@ -142,6 +145,12 @@
   font-size: 0.9rem;
   width: 260px;
   outline: none;
+  line-height: normal;
+}
+
+.search-wrap input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 :host ::ng-deep {
