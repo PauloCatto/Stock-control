@@ -8,7 +8,17 @@
     </div>
   </div>
 
-  <form [formGroup]="addProductForm" (ngSubmit)="handleSubmitAddProduct()">
+  <!-- Aviso: sem categorias -->
+  <div class="no-category-hint" *ngIf="categoriesDatas.length === 0">
+    <i class="pi pi-tag no-category-icon"></i>
+    <p class="no-category-title">Nenhuma categoria cadastrada</p>
+    <p class="no-category-sub">Crie uma categoria antes de adicionar um produto.</p>
+    <a routerLink="/categories" (click)="closeDialog()" class="no-category-btn">
+      <i class="pi pi-plus"></i> Criar Categoria
+    </a>
+  </div>
+
+  <form [formGroup]="addProductForm" (ngSubmit)="handleSubmitAddProduct()" *ngIf="categoriesDatas.length > 0">
     <div class="form-grid">
       <div class="field full">
         <label>Nome do Produto</label>
@@ -95,7 +105,17 @@
     </div>
   </div>
 
-  <form [formGroup]="saleProductForm" (ngSubmit)="handleSubmitSaleProduct()">
+  <!-- Empty state: sem produtos cadastrados -->
+  <div class="sale-empty-state" *ngIf="productsDatas.length === 0">
+    <i class="pi pi-box sale-empty-icon"></i>
+    <p class="sale-empty-title">Nenhum produto cadastrado</p>
+    <p class="sale-empty-sub">Você precisa cadastrar produtos antes de realizar uma venda.</p>
+    <a routerLink="/products" (click)="closeDialog()" class="sale-empty-btn">
+      <i class="pi pi-plus"></i> Cadastrar Produto
+    </a>
+  </div>
+
+  <form [formGroup]="saleProductForm" (ngSubmit)="handleSubmitSaleProduct()" *ngIf="productsDatas.length > 0">
     <div class="form-grid">
       <div class="field full">
         <label>Produto</label>
