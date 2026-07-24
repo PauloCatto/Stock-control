@@ -19,6 +19,12 @@ body.dark-mode {
   --header-bg: #1e293b;
 }
 
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
 body {
   margin: 0;
   padding: 0;
