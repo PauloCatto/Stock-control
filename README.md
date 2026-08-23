@@ -11,7 +11,7 @@ Sistema de Gerenciamento de Estoque de alta performance, desenvolvido com **Angu
 
 ## ✨ Funcionalidades Principais
 
-*   📊 **Dashboard Inteligente:** Visualização em tempo real de KPIs (Total de Produtos, Itens em Estoque, Valor Total).
+*   📊 **Dashboard Inteligente:** Visualização dinâmica de KPIs (Total de Produtos, Itens em Estoque, Valor Total).
 *   📈 **Análise de Dados:** Gráficos dinâmicos e ranking de "Top Produtos" com maior giro.
 *   🌓 **Dark/Light Mode:** Suporte completo a temas dinâmicos com transições suaves.
 *   🛡️ **Gestão de Categorias:** Controle robusto de categorias com travas de segurança para integridade de dados.
@@ -25,7 +25,6 @@ Sistema de Gerenciamento de Estoque de alta performance, desenvolvido com **Angu
 *   **PrimeNG 15:** Suite de componentes UI.
 *   **Chart.js:** Visualização de dados estatísticos.
 *   **RxJS 7:** Gerenciamento de fluxos de dados assíncronos.
-*   **Socket.io-client:** Comunicação em tempo real com o backend.
 *   **ngx-cookie-service:** Gerenciamento de cookies de sessão.
 
 ## 🚀 Como Iniciar
